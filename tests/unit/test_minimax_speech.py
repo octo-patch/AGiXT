@@ -103,7 +103,7 @@ def test_synthesis_returns_base64_wav_for_agent_pipeline(
 def test_environment_settings_and_explicit_overrides(speech_module, monkeypatch):
     environment = {
         "MINIMAX_API_KEY": "environment-key",
-        "MINIMAX_TTS_MODEL": "speech-2.8-turbo",
+        "MINIMAX_TTS_MODEL": "configured-environment-model",
         "MINIMAX_TTS_REGION": "cn_zh",
         "MINIMAX_TTS_VOICE": "account-voice",
     }
@@ -113,16 +113,16 @@ def test_environment_settings_and_explicit_overrides(speech_module, monkeypatch)
     provider = speech_module.minimax_speech()
     assert provider.is_configured()
     assert provider.MINIMAX_API_KEY == "environment-key"
-    assert provider.MODEL == "speech-2.8-turbo"
+    assert provider.MODEL == "configured-environment-model"
     assert provider.VOICE == "account-voice"
     assert provider.API_URI == "https://api.minimaxi.com/v1/t2a_v2"
     explicit = speech_module.minimax_speech(
         MINIMAX_API_KEY="agent-key",
-        MINIMAX_TTS_MODEL="speech-2.6-hd",
+        MINIMAX_TTS_MODEL="configured-agent-model",
         MINIMAX_TTS_VOICE="agent-voice",
     )
     assert explicit.MINIMAX_API_KEY == "agent-key"
-    assert explicit.MODEL == "speech-2.6-hd"
+    assert explicit.MODEL == "configured-agent-model"
     assert explicit.VOICE == "agent-voice"
 
 
